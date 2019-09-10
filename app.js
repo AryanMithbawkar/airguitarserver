@@ -18,6 +18,10 @@ const container = document.querySelector('.container');
 const video = document.querySelector('#video');
 const audio = document.querySelector('#audio');
 const stopDetection = document.querySelector('.stop-detection');
+const firstFret = document.querySelector('.first-fret');
+const secondFret = document.querySelector('.second-fret');
+const thirdFret = document.querySelector('.third-fret');
+const fourthFret = document.querySelector('.fourth-fret');
 let model;
 
 
@@ -27,7 +31,7 @@ handTrack.startVideo(video)
             navigator.getUserMedia({ video: {} }, stream => {
                 video.srcObject = stream;
                 // Run detection
-                setInterval(runDetection, 150);
+                setInterval(runDetection, 10);
             },
                 err => console.log(err)
             )
@@ -38,45 +42,72 @@ const runDetection = () => {
     model.detect(video)
         .then(predictions => {
             if (predictions.length !== 0) {
-                
+
                 let hand1 = predictions[0].bbox;
                 let x = hand1[0];
                 let y = hand1[1];
                 let w = hand1[2];
                 let h = hand1[3];
-                
+
                 // Calibrate by 
                 // console.log('x', hand1[0], 'y', hand1[1], 'w', hand1[2], 'h', hand1[3]);
                 // console.log('fuuuuckX', hand1[0] * 3.52);
                 // console.log('fuuuuckY', hand1[1] * 2.61);
-//OG 640 and 480
-//540 and 360
-//1903/540 = 3.52
-//941/360 = 2.61
+                //OG 640 and 480
+                //540 and 360
+                //1903/540 = 3.52
+                //941/360 = 2.61
                 var pick = document.createElement('div');
                 pick.setAttribute('class', 'pick');
                 pick.style.left = hand1[0] * 2.97 + 'px';
                 pick.style.top = hand1[1] * 2.25 + 'px';
-                let calibrateY = hand1[1] * 2.25 + 90 + 'px';
+                let calibrateY = hand1[1] * 2.25 + 100 + 'px';
                 pick.style.top = calibrateY;
                 container.appendChild(pick);
-                
-// x30 y295
-                if ((0 < x && x < 55) && (200 < y && y < 400)) {
-                    console.log('a-chord');
-                    audio.src = 'a-chord.mp3'
-                } else if ((x > 100 && x < 215) && (200 < y && y < 400)) {
-                    console.log('b-chord');
-                    audio.src = 'b-chord.mp3'
-                } else if ((230 < x && x < 355) && (y > 200 && y < 400)) {
-                    console.log('c-chord');
-                    audio.src = 'c-chord.mp3'
-                } else if (x > 370 && x < 500 && y > 200 && y < 400) {
+
+                setInterval(() => pick.remove(), 10)
+
+                let pickX = pick.style.left.replace('px', '');
+                let pickY = pick.style.top.replace('px', '');
+
+                let checkX = Number(pickX);
+                console.log('checkx', checkX);
+
+                let firstLeft = 0;
+                let firstRight = firstFret.clientWidth;
+
+                let secondLeft = firstRight;
+                let secondRight = firstRight + secondFret.clientWidth;
+
+                let thirdLeft = secondRight;
+                let thirdRight = secondRight + thirdFret.clientWidth;
+
+                let fourthLeft = thirdRight;
+                let fourthRight = thirdRight + fourthFret.clientWidth;
+
+                /* for e chord */
+                console.log('pickX', pickX);
+                console.log('pickY', pickY);
+
+                /* for a chord */
+                console.log('pickX', pickX);//1600
+                console.log('pickY', pickY);//800
+
+                if ((firstLeft < pickX && pickX < firstRight) && (700 < pickY && pickY < 900)) {
                     console.log('e-chord');
-                    audio.src = 'e-chord.mp3'
+                    audio.src = 'e-chord.mp3';
+                } else if ((secondLeft < pickX && pickX < secondRight) && (700 < pickY && pickY < 900)) {
+                    console.log('c-chord');
+                    audio.src = 'c-chord.mp3';
+                } else if ((thirdLeft < pickX && pickX < thirdRight) && (700 < pickY && pickY < 900)) {
+                    console.log('b-chord');
+                    audio.src = 'b-chord.mp3';
+                } else if ((fourthLeft < pickX && pickX < fourthRight) && (700 < pickY && pickY < 900)) {
+                    console.log('a-chord');
+                    audio.src = 'a-chord.mp3';
                 }
 
-                audio.play();
+                audio.play();                
             }
         })
     // requestAnimationFrame(runDetection);
