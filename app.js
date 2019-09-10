@@ -3,7 +3,7 @@ const modelParams = {
     imageScaleFactor: 0.2,  // reduce input image size for gains in speed.
     maxNumBoxes: 1,        // maximum number of boxes to detect
     iouThreshold: 0.5,      // ioU threshold for non-max suppression
-    scoreThreshold: 0.7,    // confidence threshold for predictions.
+    scoreThreshold: 0.2,    // confidence threshold for predictions.
 }
 
 console.log('navigator', navigator);
@@ -50,14 +50,12 @@ const runDetection = () => {
                 let h = hand1[3];
 
                 // Calibrate by 
-                // console.log('x', hand1[0], 'y', hand1[1], 'w', hand1[2], 'h', hand1[3]);
-                // console.log('fuuuuckX', hand1[0] * 3.52);
-                // console.log('fuuuuckY', hand1[1] * 2.61);
                 //OG 640 and 480
                 //540 and 360
                 //1903/540 = 3.52
                 //941/360 = 2.61
                 var pick = document.createElement('div');
+                var audio = document.createElement('audio');
                 pick.setAttribute('class', 'pick');
                 pick.style.left = hand1[0] * 2.97 + 'px';
                 pick.style.top = hand1[1] * 2.25 + 'px';
@@ -70,9 +68,7 @@ const runDetection = () => {
                 let pickX = pick.style.left.replace('px', '');
                 let pickY = pick.style.top.replace('px', '');
 
-                let checkX = Number(pickX);
-                console.log('checkx', checkX);
-
+                /* frets */
                 let firstLeft = 0;
                 let firstRight = firstFret.clientWidth;
 
@@ -85,25 +81,13 @@ const runDetection = () => {
                 let fourthLeft = thirdRight;
                 let fourthRight = thirdRight + fourthFret.clientWidth;
 
-                /* for e chord */
-                console.log('pickX', pickX);
-                console.log('pickY', pickY);
-
-                /* for a chord */
-                console.log('pickX', pickX);//1600
-                console.log('pickY', pickY);//800
-
-                if ((firstLeft < pickX && pickX < firstRight) && (700 < pickY && pickY < 900)) {
-                    console.log('e-chord');
+                if ((firstLeft < pickX && pickX < firstRight) && (600 < pickY && pickY < 900)) {
                     audio.src = 'e-chord.mp3';
-                } else if ((secondLeft < pickX && pickX < secondRight) && (700 < pickY && pickY < 900)) {
-                    console.log('c-chord');
+                } else if ((secondLeft < pickX && pickX < secondRight) && (600 < pickY && pickY < 900)) {
                     audio.src = 'c-chord.mp3';
-                } else if ((thirdLeft < pickX && pickX < thirdRight) && (700 < pickY && pickY < 900)) {
-                    console.log('b-chord');
+                } else if ((thirdLeft < pickX && pickX < thirdRight) && (600 < pickY && pickY < 900)) {
                     audio.src = 'b-chord.mp3';
-                } else if ((fourthLeft < pickX && pickX < fourthRight) && (700 < pickY && pickY < 900)) {
-                    console.log('a-chord');
+                } else if ((fourthLeft < pickX && pickX < fourthRight) && (600 < pickY && pickY < 900)) {
                     audio.src = 'a-chord.mp3';
                 }
 
