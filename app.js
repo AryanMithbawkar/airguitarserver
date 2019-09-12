@@ -3,10 +3,8 @@ const modelParams = {
     imageScaleFactor: 0.2,  // reduce input image size for gains in speed.
     maxNumBoxes: 1,        // maximum number of boxes to detect
     iouThreshold: 0.5,      // ioU threshold for non-max suppression
-    scoreThreshold: 0.2,    // confidence threshold for predictions.
+    scoreThreshold: 0.5,    // confidence threshold for predictions.
 }
-
-console.log('navigator', navigator);
 
 navigator.getUserMedia =
     navigator.getUserMedia ||
@@ -17,13 +15,14 @@ navigator.getUserMedia =
 const container = document.querySelector('.container');
 const video = document.querySelector('#video');
 const audio = document.querySelector('#audio');
-const stopDetection = document.querySelector('.stop-detection');
 const firstFret = document.querySelector('.first-fret');
 const secondFret = document.querySelector('.second-fret');
 const thirdFret = document.querySelector('.third-fret');
 const fourthFret = document.querySelector('.fourth-fret');
 let model;
 
+handTrack.load(modelParams)
+    .then(response => model = response)
 
 handTrack.startVideo(video)
     .then(status => {
@@ -97,5 +96,3 @@ const runDetection = () => {
     // requestAnimationFrame(runDetection);
 }
 
-handTrack.load(modelParams)
-    .then(lmodel => model = lmodel)
