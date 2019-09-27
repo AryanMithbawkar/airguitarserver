@@ -89,7 +89,10 @@ const runDetection = () => {
                 } else if ((fourthLeft < pickX && pickX < fourthRight) && (600 < pickY && pickY < 900)) {
                     audio.src = 'a-chord.mp3';
                 }
+                let time = Date.now()
+                let time2 = Date.now() + 500
 
+                if (Date.now() === time2)
                 audio.play();                
             }
         })
