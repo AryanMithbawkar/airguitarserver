@@ -20,6 +20,7 @@ const secondFret = document.querySelector('.second-fret');
 const thirdFret = document.querySelector('.third-fret');
 const fourthFret = document.querySelector('.fourth-fret');
 let model;
+let playNow = true;
 
 handTrack.load(modelParams)
     .then(response => model = response)
@@ -79,21 +80,28 @@ const runDetection = () => {
 
                 let fourthLeft = thirdRight;
                 let fourthRight = thirdRight + fourthFret.clientWidth;
-
-                if ((firstLeft < pickX && pickX < firstRight) && (600 < pickY && pickY < 900)) {
-                    audio.src = 'e-chord.mp3';
-                } else if ((secondLeft < pickX && pickX < secondRight) && (600 < pickY && pickY < 900)) {
-                    audio.src = 'c-chord.mp3';
-                } else if ((thirdLeft < pickX && pickX < thirdRight) && (600 < pickY && pickY < 900)) {
-                    audio.src = 'b-chord.mp3';
-                } else if ((fourthLeft < pickX && pickX < fourthRight) && (600 < pickY && pickY < 900)) {
-                    audio.src = 'a-chord.mp3';
+                let play = () => {
+                    if ((firstLeft < pickX && pickX < firstRight) && (600 < pickY && pickY < 900)) {
+                        audio.src = 'e-chord.mp3';
+                    } else if ((secondLeft < pickX && pickX < secondRight) && (600 < pickY && pickY < 900)) {
+                        audio.src = 'c-chord.mp3';
+                    } else if ((thirdLeft < pickX && pickX < thirdRight) && (600 < pickY && pickY < 900)) {
+                        audio.src = 'b-chord.mp3';
+                    } else if ((fourthLeft < pickX && pickX < fourthRight) && (600 < pickY && pickY < 900)) {
+                        audio.src = 'a-chord.mp3';
+                    }
+                    audio.play();                
                 }
-                let time = Date.now()
-                let time2 = Date.now() + 500
 
-                if (Date.now() === time2)
-                audio.play();                
+                if (playNow) {
+                    play();
+                    playNow = false;
+                } else {
+                    setInterval(() => {
+                        play();
+                        playNow = true;
+                    }, 1000)
+                }
             }
         })
     // requestAnimationFrame(runDetection);
