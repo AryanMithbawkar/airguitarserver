@@ -22,6 +22,10 @@ const fourthFret = document.querySelector('.fourth-fret');
 let model;
 let playNow = true;
 
+setInterval(() => {
+    playNow = true
+}, 750)
+
 handTrack.load(modelParams)
     .then(response => model = response)
 
@@ -42,7 +46,6 @@ const runDetection = () => {
     model.detect(video)
         .then(predictions => {
             if (predictions.length !== 0) {
-
                 let hand1 = predictions[0].bbox;
                 let x = hand1[0];
                 let y = hand1[1];
@@ -80,27 +83,27 @@ const runDetection = () => {
 
                 let fourthLeft = thirdRight;
                 let fourthRight = thirdRight + fourthFret.clientWidth;
+                
                 let play = () => {
                     if ((firstLeft < pickX && pickX < firstRight) && (600 < pickY && pickY < 900)) {
-                        audio.src = 'e-chord.mp3';
+                        strum('e')
                     } else if ((secondLeft < pickX && pickX < secondRight) && (600 < pickY && pickY < 900)) {
-                        audio.src = 'c-chord.mp3';
+                        strum('c')
                     } else if ((thirdLeft < pickX && pickX < thirdRight) && (600 < pickY && pickY < 900)) {
-                        audio.src = 'b-chord.mp3';
+                        strum('b')
                     } else if ((fourthLeft < pickX && pickX < fourthRight) && (600 < pickY && pickY < 900)) {
-                        audio.src = 'a-chord.mp3';
+                        strum('a')
                     }
-                    audio.play();                
+                }
+
+                let strum = (chord) => {
+                    audio.src = `${chord}-chord.mp3`;
+                    audio.play(); 
+                    playNow = false
                 }
 
                 if (playNow) {
                     play();
-                    playNow = false;
-                } else {
-                    setInterval(() => {
-                        play();
-                        playNow = true;
-                    }, 1000)
                 }
             }
         })
