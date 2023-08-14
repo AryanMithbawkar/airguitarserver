@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/loginReg.css" />
+    <script src="../server.js" type="application/json"></script>
+  </head>
+  <body>
+    <section class="header">
+      <div class="text-box">
+        <h1>A.I. Air Guitar</h1>
+      </div>
+    </section>
+    <div class="hero">
+      <div class="text-box">
+        <h1>A.I. Air Guitar</h1>
+      </div>
+      <div class="form-box">
+        <div class="button-box">
+          <div id="toggle-btn-backround"></div>
+          <button type="button" class="toggle-btn" onclick="login()">
+            Login
+          </button>
+          <button type="button" class="toggle-btn" onclick="register()">
+            Register
+          </button>
+        </div>
+        <form action="/login" method="post" id="login" class="input-group">
+          <input
+            type="text"
+            class="input-field"
+            placeholder="User Id"
+            name="username"
+            id="username"
+            required
+            minlength="6"
+            maxlength="20"
+          />
+          <input
+            type="password"
+            name="password"
+            class="input-field"
+            placeholder="Enter Password"
+            id="password"
+            required
+            minlength="8"
+            maxlength="10"
+          />
+<br></br><br></br>
+          <button type="submit" class="submit-btn">
+            <a>Log IN</a>
+          </button>
+        </form>
+        <form
+          action="/register"
+          method="post"
+          id="register"
+          class="input-group"
+        >
+          <input
+            type="text"
+            class="input-field"
+            name="username2"
+            placeholder="User Id"
+            id="username2"
+            required
+            minlength="6"
+            maxlength="20"
+          />
+          <input
+            type="email"
+            name="email"
+            class="input-field"
+            placeholder="Email Id"
+            id="email"
+            required
+          />
+          <input
+            type="password"
+            class="input-field"
+            name="password2"
+            placeholder="Enter Password"
+            id="password2"
+            required
+            minlength="8"
+            maxlength="10"
+          />
+          <input type="checkbox" class="check-box" /><span
+            >I agree to the terms & conditions</span>
+          <button type="submit" class="submit-btn">
+            <a>Register</a>
+          </button>
+        </form>
+      </div>
+    </div>
+    <script>
+      var x = document.getElementById("login");
+      var y = document.getElementById("register");
+      var z = document.getElementById("toggle-btn-backround");
+
+      function register() {
+        x.style.left = "-400px";
+        y.style.left = "50px";
+        z.style.left = "110px";
+      }
+      function login() {
+        x.style.left = "50px";
+        y.style.left = "450px";
+        z.style.left = "0px";
+      }
+    </script>
+    
+  </body>
+</html>

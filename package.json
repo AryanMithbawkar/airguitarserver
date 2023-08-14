@@ -1,0 +1,29 @@
+{
+  "name": "project_js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "alert": "^5.1.4",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mongodb": "^5.1.0",
+    "mongoose": "^6.10.1",
+    "navigator": "^1.0.1",
+    "nodemon": "^2.0.21",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.3",
+    "react-webcam": "^5.2.0",
+    "upgrade": "^1.1.0"
+  },
+  "keywords": []
+}
